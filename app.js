@@ -1,6 +1,10 @@
 //jshint esversion:6
 
-require("dotenv").config();
+//Specifying that the dotenv file will be used when running the app on our local server during development
+if (process.env.NODE_ENV !== "production") {
+  require("dotenv").config();
+}
+
 const mongoose = require("mongoose");
 const srvr = process.env.N1_KEY;
 const srvrCred = process.env.N1_SECRET;
