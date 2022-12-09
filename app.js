@@ -10,7 +10,7 @@ mongoose.connect(
     srvr +
     ":" +
     srvrCred +
-    "@cluster0.xjg48nn.mongodb.net/todolistdb",
+    "@cluster0.xjg48nn.mongodb.net/?retryWrites=true&w=majority",
   {
     useNewUrlParser: true,
   }
