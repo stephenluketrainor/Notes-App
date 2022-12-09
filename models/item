@@ -1,0 +1,16 @@
+const mongoose = require("mongoose");
+
+const itemSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true,
+  },
+});
+
+const listSchema = {
+  name: String,
+  items: [itemSchema],
+};
+
+exports.Item = mongoose.model("item", itemSchema);
+exports.List = mongoose.model("List", listSchema);
