@@ -1,5 +1,8 @@
 //jshint esversion:6
-require("dotenv").config();
+//Specifying that the dotenv file will be used when running the app on our local server during development
+if (process.env.NODE_ENV !== "production") {
+  require("dotenv").config();
+}
 
 const express = require("express");
 const bodyParser = require("body-parser");
@@ -14,13 +17,11 @@ app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 console.log(process.env.ATLAS_URL);
-// Mongoose Atlas Connection
+
+// Setting up mongoose server
 const mongoose = require("mongoose");
-mongoose.set("strictQuery", true);
-mongoose.connect(process.env.ATLAS_URL, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+// URL not hardcoded as this will change while app is being used. new URL parser added to ensure older deprecated version will not be active
+mongoose.connect(process.env.ATLAS_URL, { useNewUrlParser: true });
 const db = mongoose.connection;
 // Display error if issue with connection
 db.on("error", (error) => console.error(error));
