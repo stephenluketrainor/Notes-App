@@ -1,9 +1,24 @@
 //jshint esversion:6
 
+require("dotenv").config();
+const mongoose = require("mongoose");
+const srvr = process.env.N1_KEY;
+const srvrCred = process.env.N1_SECRET;
+mongoose.set("strictQuery", true);
+mongoose.connect(
+  "mongodb+srv://" +
+    srvr +
+    ":" +
+    srvrCred +
+    "@cluster0.xjg48nn.mongodb.net/todolistdb",
+  {
+    useNewUrlParser: true,
+  }
+);
 const express = require("express");
 const bodyParser = require("body-parser");
 // const date = require(__dirname + "/date.js");
-const mongoose = require("mongoose");
+
 const Item = require("./models/item").Item;
 const List = require("./models/item").List;
 const _ = require("lodash");
@@ -14,14 +29,6 @@ app.set("view engine", "ejs");
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
-
-mongoose.set("strictQuery", true);
-mongoose.connect(
-  "mongodb+srv://admin-stephen:uMRrDO6PmDfuzvHu@cluster0.xjg48nn.mongodb.net/todolistdb",
-  {
-    useNewUrlParser: true,
-  }
-);
 
 const db = mongoose.connection;
 // Display error if issue with connection

@@ -1,1 +1,13 @@
+.gitignore
+
+# Js node_modules
+
 node_modules
+
+# confidential keys
+
+.env
+
+# ignore these files
+
+date.js
