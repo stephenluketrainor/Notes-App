@@ -1,24 +1,6 @@
 //jshint esversion:6
+require("dotenv").config();
 
-//Specifying that the dotenv file will be used when running the app on our local server during development
-if (process.env.NODE_ENV !== "production") {
-  require("dotenv").config();
-}
-
-const mongoose = require("mongoose");
-const srvr = process.env.N1_KEY;
-const srvrCred = process.env.N1_SECRET;
-mongoose.set("strictQuery", true);
-mongoose.connect(
-  "mongodb+srv://" +
-    srvr +
-    ":" +
-    srvrCred +
-    "@cluster0.xjg48nn.mongodb.net/todolistdb",
-  {
-    useNewUrlParser: true,
-  }
-);
 const express = require("express");
 const bodyParser = require("body-parser");
 // const date = require(__dirname + "/date.js");
@@ -26,14 +8,19 @@ const bodyParser = require("body-parser");
 const Item = require("./models/item").Item;
 const List = require("./models/item").List;
 const _ = require("lodash");
-
 const app = express();
 
 app.set("view engine", "ejs");
-
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
+// Mongoose Atlas Connection
+const mongoose = require("mongoose");
+mongoose.set("strictQuery", true);
+mongoose.connect(process.env.ATLAS_URL, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
 const db = mongoose.connection;
 // Display error if issue with connection
 db.on("error", (error) => console.error(error));
